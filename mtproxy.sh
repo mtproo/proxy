@@ -115,12 +115,12 @@ print_line(){
 
 config_mtp(){
   cd $WORKDIR
-  echo -e "检测到您的配置文件不存在, 为您指引生成!" && print_line
+  echo -e "وجود فایل پیکربندی شما را تشخیص داد و آن را برای شما تولید کرد!" && print_line
   while true
   do
   default_port=443
-  echo -e "请输入一个客户端连接端口 [1-65535]"
-  read -p "(默认端口: ${default_port}):" input_port
+  echo -e "port : [1-65535]"
+  read -p "(ok: ${default_port}):" input_port
   [ -z "${input_port}" ] && input_port=${default_port}
   expr ${input_port} + 1 &>/dev/null
   if [ $? -eq 0 ]; then
@@ -133,15 +133,15 @@ config_mtp(){
           break
       fi
   fi
-  echo -e "[\033[33m错误\033[0m] 请重新输入一个客户端连接端口 [1-65535]"
+  echo -e "port new : [1-65535]"
   done
 
   # 管理端口
   while true
   do
   default_manage=8888
-  echo -e "请输入一个管理端口 [1-65535]"
-  read -p "(默认端口: ${default_manage}):" input_manage_port
+  echo -e "port : [1-65535]"
+  read -p "(port: ${default_manage}):" input_manage_port
   [ -z "${input_manage_port}" ] && input_manage_port=${default_manage}
   expr ${input_manage_port} + 1 &>/dev/null
   if [ $? -eq 0 ] && [ $input_manage_port -ne $input_port ]; then
@@ -154,15 +154,15 @@ config_mtp(){
           break
       fi
   fi
-  echo -e "[\033[33m错误\033[0m] 请重新输入一个管理端口 [1-65535]"
+  echo -e "new [1-65535]"
   done
 
   # domain
   while true
   do
-  default_domain="azure.microsoft.com"
-  echo -e "请输入一个需要伪装的域名："
-  read -p "(默认域名: ${default_domain}):" input_domain
+  default_domain="lib.arvancloud.com"
+  echo -e "tls : "
+  read -p "tls: ${default_domain}):" input_domain
   [ -z "${input_domain}" ] && input_domain=${default_domain}
   http_code=$(curl -I -m 10 -o /dev/null -s -w %{http_code} $input_domain)
   if [ $http_code -eq "200" ] || [ $http_code -eq "302" ] || [ $http_code -eq "301" ]; then
